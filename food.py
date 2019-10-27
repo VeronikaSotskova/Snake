@@ -1,5 +1,7 @@
 import pygame
 import random
+from const import Const
+
 
 class Food:
     def __init__(self):
@@ -11,4 +13,5 @@ class Food:
 
     def draw_food(self, window):
         """Отрисовывает еду на поле"""
-        pygame.draw.rect(window, pygame.Color("Red"), pygame.Rect(self.food_position[0], self.food_position[1], 10, 10))
+        pygame.draw.rect(window, pygame.Color("Red"), pygame.Rect(self.food_position[0], self.food_position[1],
+                                                                  Const.SIZE_BLOCK, Const.SIZE_BLOCK))
