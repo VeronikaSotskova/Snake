@@ -6,7 +6,7 @@ class Control:
     def __init__(self):
         self.run = True
         self.direction = "RIGHT"
-        self.pause = True
+        self.pause = False
 
     def control(self):
         """Управление в зависимости от флага"""
@@ -25,7 +25,4 @@ class Control:
                 elif event.key == K_ESCAPE:
                     self.run = False
                 elif event.key == K_SPACE:
-                    if self.pause:
-                        self.pause = False
-                    elif not self.pause:
-                        self.pause = True
+                    self.pause = not self.pause
