@@ -1,21 +1,24 @@
 import pygame
+from const import Const
 
 
 class Snake:
     def __init__(self):
-        self.head = [45, 45]
-        self.body = [[45, 45], [34, 45], [23, 45]]
+
+        self.head = [Const.START_X_HEAD, Const.START_Y_HEAD]
+        self.body = [[Const.START_X_HEAD, Const.START_Y_HEAD], [Const.START_X_HEAD - 11, Const.START_Y_HEAD],
+                     [Const.START_X_HEAD - 22, Const.START_Y_HEAD]]
 
     def move(self, control):
         """Движение змеей в зависимости от направления"""
-        if control.direction == "RIGHT" and control.direction != "LEFT":
-            self.head[0] += 11
-        elif control.direction == "LEFT" and control.direction != "RIGHT":
-            self.head[0] -= 11
+        if control.direction == "RIGHT":
+            self.head[0] += Const.SIZE_SPACE + Const.SIZE_BLOCK
+        elif control.direction == "LEFT":
+            self.head[0] -= Const.SIZE_SPACE + Const.SIZE_BLOCK
         elif control.direction == "UP":
-            self.head[1] -= 11
+            self.head[1] -= Const.SIZE_SPACE + Const.SIZE_BLOCK
         elif control.direction == "DOWN":
-            self.head[1] += 11
+            self.head[1] += Const.SIZE_SPACE + Const.SIZE_BLOCK
 
     def animation(self):
         """Прибавляем в начало списка тела голову и удаляем хвост"""
@@ -25,18 +28,19 @@ class Snake:
     def draw_snake(self, window):
         """Отрисовка змеи на экране"""
         for segment in self.body:
-            pygame.draw.rect(window, pygame.Color("Green"), pygame.Rect(segment[0], segment[1], 10, 10))
+            pygame.draw.rect(window, pygame.Color("Green"), pygame.Rect(segment[0], segment[1],
+                                                                        Const.SIZE_BLOCK, Const.SIZE_BLOCK))
 
     def check_snake_to_window(self):
         """Отслеживает достижение змеей края экрана"""
-        if self.head[0] == 419:
-            self.head[0] = 23
-        elif self.head[0] == 12:
-            self.head[0] = 419
-        elif self.head[1] == 23:
-            self.head[1] = 419
-        elif self.head[1] == 419:
-            self.head[1] = 34
+        if self.head[0] == Const.INTERSECT_BORDER_RIGHT:
+            self.head[0] = Const.START_LEFT_BORDER
+        elif self.head[0] == Const.INTERSECT_LEFT_BORDER:
+            self.head[0] = Const.START_RIGHT_BORDER
+        elif self.head[1] == Const.INTERSECT_UP_BORDER:
+            self.head[1] = Const.START_DOWN_BORDER
+        elif self.head[1] == Const.INTERSECT_DOWN_BORDER:
+            self.head[1] = Const.START_UP_BORDER
 
     def eat(self, food, gui):
         """Проверяет столкновение змеи и еды"""
