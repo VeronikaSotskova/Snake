@@ -3,3 +3,4 @@ class Control:
         self.run = True
         self.direction = "RIGHT"
         self.pause = False
+        #self.cur_t = 0

@@ -1,5 +1,6 @@
 import pygame
 from const import Const
+import datetime
 
 
 def print_text(msg, x, y, font_color, font_type, font_size, window):
@@ -8,11 +9,7 @@ def print_text(msg, x, y, font_color, font_type, font_size, window):
     window.blit(text, (x, y))
 
 
-def draw_lose(window):
-    """Создает экран проигрыша"""
 
-    print_text('Game Over', 30, 100, pygame.Color('Red'), 'monaco', 100, window)
-    print_text('Press Enter to restart, Esc to exit', 100, 240, pygame.Color('Red'), 'monaco', 25, window)
 
 
 class Gui:
@@ -69,6 +66,9 @@ class Gui:
         self.field = []
         self.indicator = [[12,34]]
         self.game = "GAME"
+        #self.start_time = 0
+        #self.end_time = 0
+        self.max_score = 0
 
     def create_img(self):
         """Создает изображение на основании списка"""
@@ -115,6 +115,14 @@ class Gui:
         """Создает победный экран"""
         window.blit(self.win, (23, 100))
 
+    def draw_lose(self, window):
+        """Создает экран проигрыша"""
+        print_text('Game Over', 30, 100, pygame.Color('Red'), 'monaco', 100, window)
+        print_text('Press Enter to restart, Esc to exit', 100, 240, pygame.Color('Red'), 'monaco', 25, window)
+        print_text('Max Score: {0}'.format(self.max_score),100, 265, pygame.Color('Red'), 'monaco', 25, window)
+        #print_text('Time: {0}'.format(self.end_time - self.start_time),100, 290, pygame.Color('Red'), 'monaco', 25, window)
+
+
     def check_win_or_lose(self):
         """Отслеживает выиграл или проиграл игрок"""
         if len(self.indicator) == 0:
@@ -125,3 +133,5 @@ class Gui:
     def show_score(self, window):
         """Отображение результата"""
         print_text('Score: {0}'.format(len(self.indicator)-1), 1, 5, pygame.Color("Red"), 'monaco', 24, window)
+        if self.max_score < len(self.indicator)-1:
+            self.max_score = len(self.indicator)-1
